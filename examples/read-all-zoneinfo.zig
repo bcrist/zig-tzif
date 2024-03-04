@@ -19,13 +19,13 @@ pub fn main() !void {
     var failed_convert: usize = 0;
 
     const cwd = std.fs.cwd();
-    const zoneinfo = try cwd.openIterableDir(path_to_dir, .{});
+    const zoneinfo = try cwd.openDir(path_to_dir, .{ .iterate = true });
 
     var walker = try zoneinfo.walk(allocator);
     defer walker.deinit();
     while (try walker.next()) |entry| {
         if (entry.kind == .file) {
-            const file = try zoneinfo.dir.openFile(entry.path, .{});
+            const file = try zoneinfo.openFile(entry.path, .{});
             defer file.close();
 
             if (tzif.parse(allocator, file.reader(), file.seekableStream())) |timezone| {

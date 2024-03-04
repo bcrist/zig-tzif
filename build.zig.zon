@@ -1,0 +1,11 @@
+.{
+    .name = "zig-tzif",
+    .version = "0.0.0",
+    .minimum_zig_version = "0.12.0-dev.2063+804cee3b9",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "tzif.zig",
+    },
+    .dependencies = .{},
+}

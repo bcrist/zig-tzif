@@ -16,7 +16,7 @@ pub fn build(b: *Build) void {
     const target = b.standardTargetOptions(.{});
 
     const module = b.addModule("tzif", .{
-        .source_file = .{ .path = "tzif.zig" },
+        .root_source_file = .{ .path = "tzif.zig" },
     });
 
     const lib = b.addStaticLibrary(.{
@@ -44,7 +44,8 @@ pub fn build(b: *Build) void {
             .optimize = optimize,
             .target = target,
         });
-        exe.addModule("tzif", module);
+        exe.root_module.addImport("tzif", module);
+        b.installArtifact(exe);
 
         const run_example = b.addRunArtifact(exe);
         if (b.args) |args| {
