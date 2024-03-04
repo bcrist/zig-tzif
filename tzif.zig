@@ -1008,6 +1008,12 @@ pub fn parseFile(allocator: std.mem.Allocator, path: []const u8) !TimeZone {
     return parse(allocator, file.reader(), file.seekableStream());
 }
 
+pub fn parseMemory(allocator: std.mem.Allocator, data: []const u8) !TimeZone {
+    var stream = std.io.fixedBufferStream(data);
+    
+    return parse(allocator, stream.reader(), stream.seekableStream());
+}
+
 const TransitionType = union(enum) {
     first_local_time_type,
     transition_index: usize,
